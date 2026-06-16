@@ -1,5 +1,5 @@
 /* Eisen Trainingstracker – Service Worker (Offline) */
-const CACHE = 'eisen-v4';
+const CACHE = 'eisen-v12';
 const ASSETS = [
   './',
   './index.html',

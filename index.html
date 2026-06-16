@@ -241,6 +241,10 @@
   .seg-pick button{flex:1;padding:11px;border-radius:11px;background:var(--surface-2);
     border:1px solid var(--line);color:var(--muted);font-weight:700;font-size:13.5px}
   .seg-pick button.on{background:rgba(241,90,34,.10);border-color:var(--accent);color:#c2410c}
+  .type-pick{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:11px}
+  .type-pick button{padding:9px 13px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);
+    color:var(--muted);font-weight:700;font-size:13.5px;white-space:nowrap}
+  .type-pick button.on{background:rgba(241,90,34,.10);border-color:var(--accent);color:#c2410c}
   .kcal-box{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:6px;
     background:linear-gradient(135deg,rgba(241,90,34,.10),rgba(241,90,34,.04));border:1px solid rgba(241,90,34,.28);
     border-radius:var(--r);padding:14px 16px}
@@ -272,6 +276,69 @@
   .cs-km{text-align:right;flex:none}
   .cs-km .num{font-size:18px;font-weight:800}
   .cs-km .cs-ku{display:block;font-size:10px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.06em}
+
+  /* ---------- Animierte Bewegungs-Piktogramme ---------- */
+  .picto{width:34px;height:34px;flex:none;display:inline-block;color:#51607a;line-height:0}
+  .picto svg{width:100%;height:100%;display:block;overflow:visible}
+  .picto svg *{vector-effect:non-scaling-stroke}
+  @keyframes pic-squat{0%,100%{transform:translateY(0) scaleY(1)}50%{transform:translateY(3px) scaleY(.82)}}
+  .an-squat{transform-box:view-box;transform-origin:22px 38px;animation:pic-squat 1.6s ease-in-out infinite}
+  @keyframes pic-down{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
+  .an-pushup{animation:pic-down 1.5s ease-in-out infinite}
+  @keyframes pic-up{0%,100%{transform:translateY(1.5px)}50%{transform:translateY(-3px)}}
+  .an-pull{animation:pic-up 1.6s ease-in-out infinite}
+  @keyframes pic-rowpull{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+  .an-row{animation:pic-rowpull 1.3s ease-in-out infinite}
+  @keyframes pic-curl{0%,100%{transform:rotate(0)}50%{transform:rotate(-125deg)}}
+  .an-curl{transform-box:view-box;transform-origin:17px 24px;animation:pic-curl 1.5s ease-in-out infinite}
+  @keyframes pic-press{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+  .an-press{animation:pic-press 1.5s ease-in-out infinite}
+  @keyframes pic-hinge{0%,100%{transform:rotate(0)}50%{transform:rotate(42deg)}}
+  .an-hinge{transform-box:view-box;transform-origin:22px 30px;animation:pic-hinge 1.8s ease-in-out infinite}
+  @keyframes pic-bob{0%,100%{transform:translateY(2px)}50%{transform:translateY(-3px)}}
+  .an-bob{animation:pic-bob 1.4s ease-in-out infinite}
+  @keyframes pic-core{0%,100%{transform:rotate(0)}50%{transform:rotate(-30deg)}}
+  .an-core{transform-box:view-box;transform-origin:26px 32px;animation:pic-core 1.6s ease-in-out infinite}
+  @keyframes pic-jump{0%,30%{transform:translateY(2px) scaleY(.86)}55%{transform:translateY(-6px) scaleY(1.06)}100%{transform:translateY(2px) scaleY(.86)}}
+  .an-jump{transform-box:view-box;transform-origin:22px 36px;animation:pic-jump 1.3s ease-in-out infinite}
+  @keyframes pic-legA{0%,100%{transform:rotate(22deg)}50%{transform:rotate(-24deg)}}
+  @keyframes pic-legB{0%,100%{transform:rotate(-24deg)}50%{transform:rotate(22deg)}}
+  .an-legA{transform-box:view-box;transform-origin:23px 25px;animation:pic-legA .7s ease-in-out infinite}
+  .an-legB{transform-box:view-box;transform-origin:23px 25px;animation:pic-legB .7s ease-in-out infinite}
+  @keyframes pic-armrun{0%,100%{transform:rotate(-18deg)}50%{transform:rotate(20deg)}}
+  .an-arm{transform-box:view-box;transform-origin:23px 17px;animation:pic-armrun .7s ease-in-out infinite}
+  @keyframes pic-spin{to{transform:rotate(360deg)}}
+  .an-pedal{transform-box:view-box;transform-origin:22px 33px;animation:pic-spin .9s linear infinite}
+  .an-swimarm{transform-box:view-box;transform-origin:20px 26px;animation:pic-spin 1.4s linear infinite}
+  @keyframes pic-skate{0%,100%{transform:translateX(-2.5px) rotate(-5deg)}50%{transform:translateX(2.5px) rotate(5deg)}}
+  .an-skate{transform-box:view-box;transform-origin:24px 34px;animation:pic-skate 1.1s ease-in-out infinite}
+  @keyframes pic-flyL{0%,100%{transform:rotate(0)}50%{transform:rotate(-22deg)}}
+  .an-flyL{transform-box:view-box;transform-origin:21px 27px;animation:pic-flyL 1.6s ease-in-out infinite}
+  @keyframes pic-flyR{0%,100%{transform:rotate(0)}50%{transform:rotate(22deg)}}
+  .an-flyR{transform-box:view-box;transform-origin:21px 27px;animation:pic-flyR 1.6s ease-in-out infinite}
+  .an-rfL{transform-box:view-box;transform-origin:20px 20px;animation:pic-flyL 1.6s ease-in-out infinite}
+  .an-rfR{transform-box:view-box;transform-origin:20px 20px;animation:pic-flyR 1.6s ease-in-out infinite}
+  @keyframes pic-raiseL{0%,100%{transform:rotate(13deg)}50%{transform:rotate(-12deg)}}
+  .an-raiseL{transform-box:view-box;transform-origin:22px 16px;animation:pic-raiseL 1.6s ease-in-out infinite}
+  @keyframes pic-raiseR{0%,100%{transform:rotate(-13deg)}50%{transform:rotate(12deg)}}
+  .an-raiseR{transform-box:view-box;transform-origin:22px 16px;animation:pic-raiseR 1.6s ease-in-out infinite}
+  @keyframes pic-tri{0%,100%{transform:rotate(0)}50%{transform:rotate(58deg)}}
+  .an-tri{transform-box:view-box;transform-origin:22px 13px;animation:pic-tri 1.4s ease-in-out infinite}
+  @keyframes pic-thrust{0%,100%{transform:translateY(3px)}50%{transform:translateY(-3px)}}
+  .an-thrust{animation:pic-thrust 1.5s ease-in-out infinite}
+  @keyframes pic-kick{0%,100%{transform:rotate(8deg)}50%{transform:rotate(-34deg)}}
+  .an-kick{transform-box:view-box;transform-origin:26px 24px;animation:pic-kick 1.2s ease-in-out infinite}
+  @keyframes pic-legraise{0%,100%{transform:rotate(6deg)}50%{transform:rotate(-62deg)}}
+  .an-legraise{transform-box:view-box;transform-origin:20px 31px;animation:pic-legraise 1.7s ease-in-out infinite}
+  @keyframes pic-twist{0%,100%{transform:translateX(-3px)}50%{transform:translateX(3px)}}
+  .an-twist{animation:pic-twist 1s ease-in-out infinite}
+  @keyframes pic-hold{0%,100%{transform:translateY(0)}50%{transform:translateY(-1.5px)}}
+  .an-hold{animation:pic-hold 1.6s ease-in-out infinite}
+  @keyframes pic-mtnA{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
+  @keyframes pic-mtnB{0%,100%{transform:translateX(6px)}50%{transform:translateX(0)}}
+  .an-mtnA{animation:pic-mtnA .6s ease-in-out infinite}
+  .an-mtnB{animation:pic-mtnB .6s ease-in-out infinite}
+  @media (prefers-reduced-motion: reduce){ .picto svg *{animation:none!important} }
 
   .toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);
     background:#1f2430;border:1px solid #2c3340;color:#fff;
@@ -428,6 +495,15 @@ const EXERCISE_LIBRARY=[
   {name:"Rumänisches Kreuzheben",equip:"kg",m:"Beine"},{name:"Wadenheben",equip:"bw",m:"Beine"},
   {name:"Hip Thrust",equip:"kg",m:"Beine"},{name:"Wandsitz",equip:"bw",m:"Beine"},
   {name:"Step-ups",equip:"bw",m:"Beine"},{name:"Band-Kickbacks",equip:"band",m:"Beine"},
+  {name:"Sumo-Kniebeugen",equip:"kg",m:"Beine"},{name:"Front Squat KH",equip:"kg",m:"Beine"},
+  {name:"Gesprungene Kniebeugen",equip:"bw",m:"Beine"},{name:"Walking Lunges",equip:"bw",m:"Beine"},
+  {name:"Seitliche Ausfallschritte",equip:"bw",m:"Beine"},{name:"Rückwärts-Ausfallschritte",equip:"bw",m:"Beine"},
+  {name:"Curtsy Lunge",equip:"bw",m:"Beine"},{name:"Glute Bridge",equip:"bw",m:"Beine"},
+  {name:"Einbeiniger Hip Thrust",equip:"bw",m:"Beine"},{name:"Good Mornings",equip:"kg",m:"Beine"},
+  {name:"Sissy Squat",equip:"bw",m:"Beine"},{name:"Pistol Squat",equip:"bw",m:"Beine"},
+  {name:"Wadenheben einbeinig",equip:"bw",m:"Beine"},{name:"Wadenheben sitzend",equip:"kg",m:"Beine"},
+  {name:"Box Jumps",equip:"bw",m:"Beine"},{name:"Step-ups mit KH",equip:"kg",m:"Beine"},
+  {name:"Beinheben seitlich",equip:"bw",m:"Beine"},{name:"Glute Kickback",equip:"bw",m:"Beine"},
   // Core
   {name:"Crunches",equip:"bw",m:"Core"},{name:"Plank",equip:"bw",m:"Core"},
   {name:"Russian Twists",equip:"kg",m:"Core"},{name:"Beinheben",equip:"bw",m:"Core"},
@@ -646,6 +722,46 @@ function toast(msg,pr){
   clearTimeout(toastT);toastT=setTimeout(()=>t.className="toast",2200);
 }
 
+/* ---- Auswertung nach Zeitraum (Tag/Woche/Monat/Jahr) ---- */
+const MONTH_SHORT=["Jan","Feb","Mär","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Dez"];
+const MONTH_LONG=["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
+function startOfDay(t){const x=new Date(t);x.setHours(0,0,0,0);return x;}
+function periodLabel(p){
+  const n=new Date();
+  if(p==="day")return "Heute";
+  if(p==="week")return "Diese Woche";
+  if(p==="month")return MONTH_LONG[n.getMonth()]+" "+n.getFullYear();
+  return String(n.getFullYear());
+}
+function periodBuckets(period){
+  const now=Date.now();
+  const mk=(s,e,label)=>({start:+s,end:+e,label,agg:{trainings:0,sets:0,reps:0,vol:0,min:0,kcal:0,dist:0,days:new Set()}});
+  const buckets=[];
+  if(period==="day"){
+    const N=14, base=startOfDay(now);
+    for(let i=N-1;i>=0;i--){const s=new Date(base);s.setDate(s.getDate()-i);const e=new Date(s);e.setDate(e.getDate()+1);buckets.push(mk(s,e,`${s.getDate()}.${s.getMonth()+1}.`));}
+  }else if(period==="week"){
+    const N=10, base=weekStart(now);
+    for(let i=N-1;i>=0;i--){const s=new Date(base);s.setDate(s.getDate()-i*7);const e=new Date(s);e.setDate(e.getDate()+7);buckets.push(mk(s,e,fmtDM(s)));}
+  }else if(period==="month"){
+    const N=12, d=new Date(now);
+    for(let i=N-1;i>=0;i--){const s=new Date(d.getFullYear(),d.getMonth()-i,1);const e=new Date(d.getFullYear(),d.getMonth()-i+1,1);buckets.push(mk(s,e,MONTH_SHORT[s.getMonth()]));}
+  }else{
+    const N=5, y=new Date(now).getFullYear();
+    for(let i=N-1;i>=0;i--){const s=new Date(y-i,0,1);const e=new Date(y-i+1,0,1);buckets.push(mk(s,e,String(y-i)));}
+  }
+  const first=buckets[0].start, last=buckets[buckets.length-1].end;
+  for(const s of db.sessions){
+    if(s.date<first||s.date>=last)continue;
+    const b=buckets.find(b=>s.date>=b.start&&s.date<b.end); if(!b)continue;
+    const a=b.agg; a.trainings++; a.days.add(new Date(s.date).toDateString());
+    a.min+=s.duration||0; a.kcal+=s.kcal||0;
+    if(isCardio(s)){a.dist+=s.distance||0;}
+    else{for(const e of exList(s))for(const st of e.sets){a.sets++; a.reps+=(+st.reps||0); a.vol+=(+st.reps||0)*(st.weight||0);}}
+  }
+  return buckets;
+}
+
 /* find best e1RM for an exercise (by name) across finished sessions, optionally excluding one session */
 function bestE1RM(exName,exceptSessionId){
   let best=0;
@@ -702,7 +818,7 @@ function viewTrainHome(){
       <div class="td-ey">Heute · ${WD_LONG[today]}</div>
       <div class="spread" style="align-items:center;margin-top:4px">
         <div style="min-width:0"><div class="td-name">${esc(schedPlan.name)}</div>
-          <div class="td-sub">${schedPlan.ex.length} Übungen · ${schedPlan.ex.reduce((a,e)=>a+e.sets,0)} Sätze${trainedToday?' · heute schon trainiert ✓':''}</div></div>
+          <div class="td-sub">${(schedPlan.ex.length===0&&isCardioType(schedPlan.type))?`${cardioDef(schedPlan.type).label} · Ziel 30 Min`:`${schedPlan.ex.length} Einheiten · ${planStrengthSets(schedPlan)} Sätze`}${trainedToday?' · heute schon trainiert ✓':''}</div></div>
       </div>
       <button class="btn" style="margin-top:13px" onclick="startSession('${schedPlan.id}')">${trainedToday?'Nochmal starten':'Jetzt starten'}</button>
     </div>`;
@@ -718,14 +834,15 @@ function viewTrainHome(){
     <h2>Training starten</h2></div></div>`;
   html+=db.plans.map(p=>{
     const c=p.ex.length;
+    const ss=planStrengthSets(p);
+    const emptyCardio=c===0&&isCardioType(p.type);
     return `<div class="card plan-card" onclick="startSession('${p.id}')">
       <div class="top">
         <h3>${esc(p.name)}</h3>
-        <span class="chip type">${p.type==="full"?"Ganzkörper":"Split"}</span>
+        ${typeBadge(p.type)}
       </div>
-      <div class="plan-meta"><span><b>${c}</b> Übungen</span>
-        <span><b>${p.ex.reduce((a,e)=>a+e.sets,0)}</b> Sätze geplant</span></div>
-      <div class="ex-mini">${p.ex.slice(0,4).map(e=>esc(e.name)).join(" · ")}${c>4?" · …":""}</div>
+      <div class="plan-meta">${emptyCardio?`<span>Ausdauertraining · Ziel 30 Min</span>`:`<span><b>${c}</b> Einheiten</span>${ss>0?`<span><b>${ss}</b> Sätze geplant</span>`:""}`}</div>
+      ${c?`<div class="ex-mini">${p.ex.slice(0,4).map(e=>e.kind==="cardio"?(cardioDef(e.activity).emoji+" "+esc(cardioDef(e.activity).label)):esc(e.name)).join(" · ")}${c>4?" · …":""}</div>`:""}
     </div>`;
   }).join("");
 
@@ -751,17 +868,24 @@ function viewTrainHome(){
 
 function startSession(planId){
   const p=db.plans.find(x=>x.id===planId);if(!p)return;
+  const strength=p.ex.filter(e=>e.kind!=="cardio");
+  const cardio=p.ex.filter(e=>e.kind==="cardio");
   active={
     id:uid(),planId:p.id,planName:p.name,type:p.type,date:Date.now(),
-    ex:p.ex.map(e=>{
+    ex:strength.map(e=>{
       const le=lastEntry(e.name);
       const sets=Array.from({length:e.sets},(_,i)=>({
         reps:"",weight:"",assist:false,
         ph:le&&le.sets[i]?le.sets[i]:null   // placeholder from last time
       }));
       return {exId:e.id,name:e.name,equip:e.equip,targetSets:e.sets,targetReps:e.reps,sets};
-    })
+    }),
+    cardio:cardio.map(e=>({activity:e.activity,targetMin:e.min,targetDist:e.dist,min:"",dist:"",intensity:"mod"}))
   };
+  // Ausdauer-Plan ohne eigene Cardio-Einträge → Einheit aus dem Typ ableiten
+  if(isCardioType(p.type) && active.cardio.length===0){
+    active.cardio.push({activity:p.type,targetMin:30,targetDist:"",min:"",dist:"",intensity:"mod"});
+  }
   save();go("train");
 }
 
@@ -779,7 +903,7 @@ function viewSession(){
     const best=bestE1RM(e.name);
     const rows=e.sets.map((s,si)=>setRow(ei,si,s)).join("");
     return `<div class="ex-block card" data-ex="${ei}">
-      <div class="eh"><span class="nm">${esc(e.name)}</span>
+      <div class="eh">${pictoStrength(e.name)}<span class="nm">${esc(e.name)}</span>
         <span class="chip ${E.cls}">${E.label}</span>
         <button class="kebab" onclick="sessExMenu(${ei})" aria-label="Übung tauschen oder entfernen">
           <svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg></button>
@@ -797,8 +921,11 @@ function viewSession(){
     </div>`;
   }).join("");
 
-  if(!a.ex.length){
-    html+=`<div class="card muted" style="text-align:center;padding:26px">Keine Übungen in dieser Einheit. Füge unten eine hinzu.</div>`;
+  // Cardio-Einheiten in dieser Session
+  html+=(a.cardio||[]).map((cb,ci)=>cardioBlock(ci,cb)).join("");
+
+  if(!a.ex.length && !(a.cardio&&a.cardio.length)){
+    html+=`<div class="card muted" style="text-align:center;padding:26px">Noch nichts in dieser Einheit. Füge unten eine Übung hinzu.</div>`;
   }
 
   html+=`<button class="add-set" style="margin-top:6px" onclick="exPickerSheet('add',null)">
@@ -809,6 +936,46 @@ function viewSession(){
     <button class="btn ghost sm" style="flex:none" onclick="cancelSession()">Verwerfen</button>
   </div>`;
   return html;
+}
+function cardioBlock(ci,cb){
+  const c=cardioDef(cb.activity);
+  const w=getLatestWeight();
+  const kcal=calcKcalCardio(parseInt(cb.min)||0,w,cb.activity,cb.intensity);
+  return `<div class="ex-block card" style="border-left:4px solid ${c.color}">
+    <div class="eh">${pictoCardio(cb.activity)}<span class="nm">${c.emoji} ${esc(c.label)}</span>
+      <span class="chip" style="color:${c.color};background:${c.color}1a">Ausdauer</span></div>
+    <div class="target">Ziel: ${cb.targetMin||"–"} Min${cb.targetDist?` · ${cb.targetDist} km`:""}</div>
+    <div class="two">
+      <label class="field" style="margin-bottom:10px"><span class="lab">Dauer (Min)</span>
+        <input class="inp num" inputmode="numeric" value="${cb.min}" placeholder="${cb.targetMin||""}" oninput="setCardioField(${ci},'min',this.value)"></label>
+      <label class="field" style="margin-bottom:10px"><span class="lab">Distanz (km)</span>
+        <input class="inp num" inputmode="decimal" value="${cb.dist}" placeholder="${cb.targetDist||"optional"}" oninput="setCardioField(${ci},'dist',this.value)"></label>
+    </div>
+    <div class="field" style="margin-bottom:10px"><span class="lab">Intensität</span>
+      <div class="seg-pick" data-cint="${ci}">
+        ${INTENSITY.map(it=>`<button class="${cb.intensity===it.id?"on":""}" onclick="setSessCardioIntensity(${ci},'${it.id}')">${it.label}</button>`).join("")}
+      </div></div>
+    <div class="kcal-box" style="margin-top:0">
+      <div><div class="kcal-k">Verbrauch</div>
+        <div class="muted" data-clbl="${ci}" style="font-size:11.5px">${c.label} · ${INTENSITY.find(i=>i.id===cb.intensity).label}</div></div>
+      <div class="kcal-v"><span data-ckcal="${ci}" class="num">${kcal!=null?kcal:"–"}</span> kcal</div>
+    </div>
+  </div>`;
+}
+function setCardioField(ci,key,val){
+  active.cardio[ci][key]=val;save();updateSessCardioKcal(ci);
+}
+function setSessCardioIntensity(ci,id){
+  active.cardio[ci].intensity=id;save();
+  document.querySelectorAll(`[data-cint="${ci}"] button`).forEach((b,i)=>b.classList.toggle("on",INTENSITY[i].id===id));
+  updateSessCardioKcal(ci);
+}
+function updateSessCardioKcal(ci){
+  const cb=active.cardio[ci];
+  const kcal=calcKcalCardio(parseInt(cb.min)||0,getLatestWeight(),cb.activity,cb.intensity);
+  const el=document.querySelector(`[data-ckcal="${ci}"]`);if(el)el.textContent=kcal!=null?kcal:"–";
+  const lbl=document.querySelector(`[data-clbl="${ci}"]`);
+  if(lbl)lbl.textContent=`${cardioDef(cb.activity).label} · ${INTENSITY.find(i=>i.id===cb.intensity).label}`;
 }
 
 function setRow(ei,si,s){
@@ -1014,6 +1181,91 @@ const CARDIO=[
   {id:"skate",label:"Skaten",    emoji:"🛼", color:"#a855f7", met:[5.5,7.5,9.5]},
 ];
 const cardioDef=id=>CARDIO.find(c=>c.id===id)||CARDIO[0];
+const isCardioType=t=>CARDIO.some(c=>c.id===t);
+function typeLabel(t){
+  if(t==="full")return "Ganzkörper";
+  if(t==="split")return "Split";
+  const c=cardioDef(t);return `${c.emoji} ${c.label}`;
+}
+function typeBadge(t){
+  if(isCardioType(t)){const c=cardioDef(t);return `<span class="chip" style="color:${c.color};background:${c.color}1a">${c.emoji} ${c.label}</span>`;}
+  return `<span class="chip type">${t==="full"?"Ganzkörper":"Split"}</span>`;
+}
+
+/* Animierte Bewegungs-Piktogramme (selbstgezeichnete SVGs) */
+const _svg=g=>`<svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">${g}</svg>`;
+const _h=(x,y,r)=>`<circle cx="${x}" cy="${y}" r="${r||3.8}" fill="currentColor" stroke="none"/>`;
+const PICTO={
+  squat:_svg(`<g class="an-squat">${_h(22,10)}<path d="M22 14 V22"/><path d="M22 22 L16 29 L15 37"/><path d="M22 22 L28 29 L29 37"/><path d="M22 16 L16 20 M22 16 L28 20"/></g>`),
+  lunge:_svg(`<g class="an-pushup">${_h(22,9)}<path d="M22 13 V25"/><path d="M22 25 L29 31 L29 38"/><path d="M22 25 L15 33 L13 38"/><path d="M22 16 L27 20 M22 16 L17 19"/></g>`),
+  stepup:_svg(`<rect x="26" y="30" width="12" height="9" rx="1.5"/><g class="an-bob">${_h(18,11)}<path d="M18 15 V26"/><path d="M18 26 L26 30"/><path d="M18 26 L15 38"/><path d="M18 17 L24 20"/></g>`),
+  wallsit:_svg(`<path d="M34 8 V40"/><path d="M14 39 H32"/><g class="an-hold">${_h(28,16,3.5)}<path d="M28 20 V26"/><path d="M28 26 H18"/><path d="M18 26 V38"/><path d="M28 22 L22 25"/></g>`),
+  pushup:_svg(`<path d="M6 36 H40"/><g class="an-pushup">${_h(11,22,3.5)}<path d="M14 23 L33 29"/><path d="M33 29 L39 33"/><path d="M16 24 V33 M24 26 V34"/></g>`),
+  dip:_svg(`<path d="M12 18 V35 M32 18 V35"/><g class="an-pushup">${_h(22,12,3.6)}<path d="M22 15 V26"/><path d="M22 26 l-3 6 M22 26 l3 6"/><path d="M22 17 L13 18 M22 17 L31 18"/></g>`),
+  benchpress:_svg(`<path d="M7 31 H35"/><g class="an-press"><path d="M19 27 V17 M24 27 V17"/><path d="M15 16 H28"/><rect x="13.2" y="14.4" width="3.2" height="3.2" rx="1" fill="currentColor" stroke="none"/><rect x="26.6" y="14.4" width="3.2" height="3.2" rx="1" fill="currentColor" stroke="none"/></g>${_h(10,27,3.4)}<path d="M13 28 H27"/><path d="M27 28 l4 4 l-1 3"/>`),
+  fly:_svg(`<path d="M7 31 H33"/>${_h(10,27,3.4)}<path d="M13 28 H27"/><path d="M27 28 l4 4"/><g class="an-flyL"><path d="M21 27 L13 22"/><circle cx="12" cy="21" r="1.8" fill="currentColor" stroke="none"/></g><g class="an-flyR"><path d="M21 27 L29 22"/><circle cx="30" cy="21" r="1.8" fill="currentColor" stroke="none"/></g>`),
+  ohpress:_svg(`${_h(22,12)}<path d="M22 16 V29"/><path d="M22 29 L17 39 M22 29 L27 39"/><g class="an-press"><path d="M22 18 L15 13 M22 18 L29 13"/><rect x="12.4" y="11" width="5.2" height="2.6" rx="1.2" fill="currentColor" stroke="none"/><rect x="26.4" y="11" width="5.2" height="2.6" rx="1.2" fill="currentColor" stroke="none"/></g>`),
+  lateralraise:_svg(`${_h(22,9)}<path d="M22 13 V27"/><path d="M22 27 l-4 11 M22 27 l4 11"/><g class="an-raiseL"><path d="M22 16 L13 16"/><circle cx="12" cy="16" r="1.8" fill="currentColor" stroke="none"/></g><g class="an-raiseR"><path d="M22 16 L31 16"/><circle cx="32" cy="16" r="1.8" fill="currentColor" stroke="none"/></g>`),
+  triceps:_svg(`${_h(22,11)}<path d="M22 15 V28"/><path d="M22 28 l-4 10 M22 28 l4 10"/><path d="M22 16 V13"/><g class="an-tri"><path d="M22 13 L27 8"/><rect x="26" y="6.6" width="3" height="3" rx="1" fill="currentColor" stroke="none"/></g>`),
+  pullup:_svg(`<path d="M6 7 H38"/><g class="an-pull"><path d="M16 7 V15 M28 7 V15"/>${_h(22,19)}<path d="M22 23 V31"/><path d="M22 31 L18 38 M22 31 L26 38"/></g>`),
+  row:_svg(`${_h(12,15)}<path d="M15 17 L31 23"/><path d="M31 23 L28 33 M31 23 L36 31"/><g class="an-row"><path d="M18 19 V28"/><rect x="15" y="27.5" width="6" height="2.6" rx="1.2" fill="currentColor" stroke="none"/></g>`),
+  rearfly:_svg(`${_h(12,16,3.3)}<path d="M15 18 L27 22"/><path d="M27 22 l-2 9 M27 22 l5 8"/><g class="an-rfL"><path d="M20 20 L13 16"/><circle cx="12" cy="15" r="1.7" fill="currentColor" stroke="none"/></g><g class="an-rfR"><path d="M20 20 L27 16"/><circle cx="28" cy="15" r="1.7" fill="currentColor" stroke="none"/></g>`),
+  superman:_svg(`<g class="an-bob"><path d="M10 27 Q22 23 34 27"/>${_h(8,26,3)}<path d="M11 26 L5 22"/><path d="M33 26 L39 22"/></g>`),
+  curl:_svg(`${_h(22,10)}<path d="M22 14 V27"/><path d="M22 27 L17 38 M22 27 L27 38"/><path d="M22 17 L17 24"/><g class="an-curl"><path d="M17 24 V32"/><rect x="14.4" y="31" width="5.2" height="2.6" rx="1.2" fill="currentColor" stroke="none"/></g>`),
+  deadlift:_svg(`<path d="M22 30 l-4 9 M22 30 l4 9"/><g class="an-hinge">${_h(22,11)}<path d="M22 15 V30"/><path d="M22 19 L16 24 M22 19 L28 24"/><path d="M13 24 H31"/><circle cx="12" cy="24" r="2.2" fill="currentColor" stroke="none"/><circle cx="32" cy="24" r="2.2" fill="currentColor" stroke="none"/></g>`),
+  hinge:_svg(`<path d="M22 30 L18 39 M22 30 L26 39"/><g class="an-hinge">${_h(22,12)}<path d="M22 16 V30"/><path d="M22 20 L16 25"/></g>`),
+  hipthrust:_svg(`<rect x="5" y="20" width="6" height="9" rx="1"/><path d="M9 39 H33"/><path d="M30 33 V39"/><g class="an-thrust">${_h(12,23,3)}<path d="M14 25 L26 25"/><path d="M26 25 L30 33"/></g>`),
+  kickback:_svg(`${_h(11,18,3.2)}<path d="M13 20 L26 24"/><path d="M13 20 L12 31"/><path d="M26 24 L25 31"/><g class="an-kick"><path d="M26 24 L34 20"/></g>`),
+  calf:_svg(`<path d="M12 40 H32"/><g class="an-bob">${_h(22,11)}<path d="M22 15 V28"/><path d="M22 28 L18 38 M22 28 L26 38"/><path d="M22 18 L16 22 M22 18 L28 22"/></g>`),
+  jump:_svg(`<g class="an-jump">${_h(22,11)}<path d="M22 15 V26"/><path d="M22 26 L17 35 M22 26 L27 35"/><path d="M22 17 L15 12 M22 17 L29 12"/></g>`),
+  crunch:_svg(`<path d="M27 32 L18 26 L12 31"/><g class="an-core"><path d="M27 32 L17 25"/>${_h(15,23,3.4)}<path d="M20 27 L15 30"/></g>`),
+  plank:_svg(`<path d="M6 36 H40"/><g class="an-hold">${_h(10,24,3.4)}<path d="M13 25 L34 31"/><path d="M34 31 l3 3"/><path d="M15 26 V33"/><path d="M15 33 H20"/></g>`),
+  legraise:_svg(`<path d="M6 33 H20"/>${_h(8,30,3.2)}<path d="M11 31 H20"/><g class="an-legraise"><path d="M20 31 L31 31"/><path d="M31 31 h3"/></g>`),
+  russiantwist:_svg(`<path d="M14 38 L22 30 L30 38"/>${_h(22,18,3.5)}<path d="M22 22 V30"/><g class="an-twist"><path d="M22 25 L28 27"/><circle cx="29" cy="27" r="1.8" fill="currentColor" stroke="none"/></g>`),
+  mountainclimber:_svg(`<path d="M6 36 H40"/>${_h(10,22,3.4)}<path d="M13 23 L31 30"/><path d="M15 24 V33 M24 27 V33"/><g class="an-mtnA"><path d="M31 30 L23 33"/></g><g class="an-mtnB"><path d="M31 30 L37 36"/></g>`),
+  run:_svg(`${_h(23,10)}<path d="M23 14 V25"/><g class="an-arm"><path d="M23 17 L29 21"/></g><path d="M23 17 L17 14"/><g class="an-legA"><path d="M23 25 L18 35"/></g><g class="an-legB"><path d="M23 25 L28 34"/></g>`),
+  bike:_svg(`<circle cx="11" cy="33" r="6"/><circle cx="33" cy="33" r="6"/><path d="M11 33 L22 33 L17 22 M22 33 L30 21 L33 33"/>${_h(22,33,1.6)}<g class="an-pedal"><path d="M22 33 L26 35"/></g><path d="M30 21 L26 12"/>${_h(25,10,3.2)}`),
+  swim:_svg(`<path d="M6 33 q4 -2.5 8 0 t8 0 t8 0"/>${_h(11,24,3.4)}<path d="M14 25 L30 28"/><path d="M30 28 L36 26 M30 28 L35 31"/><g class="an-swimarm"><path d="M20 26 V18"/></g>`),
+  skate:_svg(`<g class="an-skate">${_h(22,11)}<path d="M22 15 L24 26"/><path d="M24 26 L18 34 M24 26 L30 33"/><path d="M22 18 L29 19"/>${_h(17,36,1.4)}${_h(31,35,1.4)}</g>`),
+  lift:_svg(`<g class="an-bob"><path d="M14 22 H30"/><rect x="9" y="16.5" width="4.2" height="11" rx="1.4" fill="currentColor" stroke="none"/><rect x="30.8" y="16.5" width="4.2" height="11" rx="1.4" fill="currentColor" stroke="none"/><rect x="5.5" y="18.5" width="3" height="7" rx="1.2" fill="currentColor" stroke="none"/><rect x="35.5" y="18.5" width="3" height="7" rx="1.2" fill="currentColor" stroke="none"/></g>`),
+};
+function animKeyFor(name){
+  const n=(name||"").toLowerCase();
+  const has=(...k)=>k.some(x=>n.includes(x));
+  // Rücken / Bizeps
+  if(has("klimmz","pull-up","pull up","latzug"))return "pullup";
+  if(has("face pull","reverse fly","reverse flys","butterfly reverse"))return "rearfly";
+  if(has("rudern","row"))return "row";
+  if(has("superman"))return "superman";
+  if(has("curl","hammer","konzentrations","bizeps"))return "curl";
+  // Brust / Schulter / Trizeps
+  if(has("dip"))return "dip";
+  if(has("trizeps","triceps","pushdown","überkopf-trizep"))return "triceps";
+  if(has("fliegende","fly","butterfly"))return "fly";
+  if(has("bankdrücken","schrägbank","bench"))return "benchpress";
+  if(has("seitheben","frontheben","lateral","seithebe"))return "lateralraise";
+  if(has("pike","schulterdrücken","arnold","overhead-press","overheadpress","band-press","press","drücken","schulterpresse"))return "ohpress";
+  if(has("liegestütz","push-up","push up","pushup","diamant"))return "pushup";
+  // Beine / Glutes
+  if(has("wadenheben","calf","waden"))return "calf";
+  if(has("wandsitz","wall sit","wallsit"))return "wallsit";
+  if(has("hip thrust","hipthrust","glute bridge","glute-bridge","frog","brücke","bridge"))return "hipthrust";
+  if(has("kickback","kick-back","glute kick"))return "kickback";
+  if(has("box jump","gesprungene","jump squat","sprung","jumping"))return "jump";
+  if(has("step-up","step up","stepup","ausfallschritt","lunge","split squat","bulgarian","curtsy"))return has("step")?"stepup":"lunge";
+  if(has("kreuzheben","good morning","rumänisch","deadlift","romanian","hinge","kettlebell swing","swing"))return "deadlift";
+  if(has("kniebeug","squat","sissy","pistol","goblet","sumo","front squat"))return "squat";
+  // Core
+  if(has("plank","unterarmstütz","seitstütz"))return "plank";
+  if(has("russian","twist"))return "russiantwist";
+  if(has("mountain","climber"))return "mountainclimber";
+  if(has("beinheben","leg raise","leg-raise","legraise","beinheber"))return "legraise";
+  if(has("crunch","sit-up","sit up","situp","bicycle","dead bug","käfer","bauchpresse"))return "crunch";
+  return "lift";
+}
+function pictoStrength(name){return `<span class="picto">${PICTO[animKeyFor(name)]||PICTO.lift}</span>`;}
+function pictoCardio(activity){const c=cardioDef(activity);return `<span class="picto" style="color:${c.color}">${PICTO[activity]||PICTO.run}</span>`;}
+function pictoForItem(e){return e&&e.kind==="cardio"?pictoCardio(e.activity):pictoStrength(e.name);}
 function calcKcalCardio(min,weight,activityId,intensityId){
   if(!min||!weight)return null;
   const met=cardioDef(activityId).met[intensityIdx(intensityId)];
@@ -1032,9 +1284,14 @@ function calcKcal(min,weight,intensityId){
 
 let finishDraft=null;
 function finishSheet(){
-  // nur Sätze mit Eingabe zählen
-  const has=active.ex.some(e=>e.sets.some(s=>s.reps!==""));
-  if(!has){toast("Noch keine Sätze erfasst");return;}
+  const hasSets=active.ex.some(e=>e.sets.some(s=>s.reps!==""));
+  const hasCardio=(active.cardio||[]).some(c=>(parseInt(c.min)||0)>0);
+  if(!hasSets && !hasCardio){toast("Noch nichts erfasst");return;}
+  if(!hasSets && hasCardio){
+    // reines Ausdauertraining – kein Kraft-Dialog nötig
+    commitSession({duration:null,kcal:null,intensity:null,bodyWeight:getLatestWeight()});
+    return;
+  }
   const elapsed=Math.round((Date.now()-active.date)/60000);
   const min=(elapsed>=1&&elapsed<=180)?elapsed:45;
   finishDraft={intensity:"mod", weight:getLatestWeight()};
@@ -1090,29 +1347,49 @@ function commitFromSheet(){
 
 function commitSession(meta){
   meta=meta||{};
-  const cleaned={...active,ex:active.ex.map(e=>({
+  const weight=meta.bodyWeight||getLatestWeight();
+  const date=active.date;
+  let prHit=false, savedAny=false;
+  const parts=[];
+
+  // 1) Kraft-Session (falls Sätze vorhanden)
+  const cleaned={...active};
+  delete cleaned.cardio;
+  cleaned.ex=active.ex.map(e=>({
     exId:e.exId,name:e.name,equip:e.equip,targetReps:e.targetReps,
     sets:e.sets.filter(s=>s.reps!=="").map(s=>({reps:+s.reps,weight:s.weight===""?0:+s.weight,assist:!!s.assist,band:s.band||null}))
-  })).filter(e=>e.sets.length)};
-  const totalSets=cleaned.ex.reduce((a,e)=>a+e.sets.length,0);
-  if(!totalSets){toast("Noch keine Sätze erfasst");return;}
-  // detect any PR before committing (bandgestützte Sätze ausgenommen)
-  let prHit=false;
-  for(const e of cleaned.ex){
-    const prev=bestE1RM(e.name);
-    for(const s of e.sets){if(!isBanded(s)&&e1rm(s.weight,s.reps)>prev&&e1rm(s.weight,s.reps)>0){prHit=true;break;}}
-    if(prHit)break;
+  })).filter(e=>e.sets.length);
+  if(cleaned.ex.length){
+    for(const e of cleaned.ex){
+      const prev=bestE1RM(e.name);
+      for(const s of e.sets){if(!isBanded(s)&&e1rm(s.weight,s.reps)>prev&&e1rm(s.weight,s.reps)>0){prHit=true;break;}}
+      if(prHit)break;
+    }
+    cleaned.done=true;
+    cleaned.duration=meta.duration||null;
+    cleaned.kcal=meta.kcal!=null?meta.kcal:null;
+    cleaned.intensity=meta.intensity||null;
+    cleaned.bodyWeight=weight||null;
+    db.sessions.push(cleaned);savedAny=true;
+    parts.push("Krafttraining");
   }
-  cleaned.done=true;
-  cleaned.duration=meta.duration||null;
-  cleaned.kcal=meta.kcal!=null?meta.kcal:null;
-  cleaned.intensity=meta.intensity||null;
-  cleaned.bodyWeight=meta.bodyWeight||null;
-  db.sessions.push(cleaned);
+
+  // 2) Ausdauer-Einheiten als eigene Cardio-Einträge
+  for(const cb of (active.cardio||[])){
+    const min=parseInt(cb.min)||0;
+    if(!min)continue;
+    let dist=(""+cb.dist).trim().replace(",",".");dist=dist!==""&&!isNaN(+dist)?+dist:null;
+    const kcal=calcKcalCardio(min,weight,cb.activity,cb.intensity);
+    db.sessions.push({id:uid(),kind:"cardio",activity:cb.activity,date,
+      duration:min,distance:dist,kcal,intensity:cb.intensity,bodyWeight:weight||null,done:true});
+    savedAny=true;parts.push(cardioDef(cb.activity).label);
+  }
+
+  if(!savedAny){toast("Noch nichts erfasst");return;}
+  db.sessions.sort((a,b)=>a.date-b.date);
   active=null;save();
   go("history");
-  const extra=[meta.duration?`${meta.duration} Min`:null, meta.kcal!=null?`${meta.kcal} kcal`:null].filter(Boolean).join(" · ");
-  setTimeout(()=>toast(prHit?"★ Stark! Neuer Bestwert dabei.":("Gespeichert"+(extra?" · "+extra:"")+" 💪"),prHit),250);
+  setTimeout(()=>toast(prHit?"★ Stark! Neuer Bestwert dabei.":("Gespeichert · "+parts.join(" + ")+" 💪"),prHit),250);
 }
 function cancelSession(){
   confirmSheet("Training verwerfen?","Alle Eingaben dieser Session gehen verloren.","Verwerfen",()=>{
@@ -1238,20 +1515,32 @@ function viewPlans(){
       <div class="plan-card-head spread" style="margin-bottom:10px">
         <div class="row" style="gap:9px;min-width:0">
           <h3 style="font-size:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(p.name)}</h3>
-          <span class="chip type">${p.type==="full"?"Ganzkörper":"Split"}</span>
+          ${typeBadge(p.type)}
         </div>
         <button class="btn ghost sm" style="flex:none" onclick="editPlan('${p.id}')">Bearbeiten</button>
       </div>
-      ${p.ex.map((e,i)=>{const E=eq(e.equip);return `<div class="ex-item">
-        <div class="idx">${i+1}</div>
-        <div class="body"><div class="nm">${esc(e.name)}</div>
-          <div class="sub">${e.sets} × ${e.reps} Wdh. · ${E.label}</div></div>
-      </div>`;}).join("")||`<div class="muted" style="font-size:13.5px;padding:6px 0">Noch keine Übungen</div>`}
+      ${p.ex.map((e,i)=>`<div class="ex-item">
+        ${pictoForItem(e)}
+        <div class="body"><div class="nm">${planItemName(e)}</div>
+          <div class="sub">${planItemSub(e)}</div></div>
+      </div>`).join("")||(isCardioType(p.type)
+        ? `<div class="ex-item">${pictoCardio(p.type)}<div class="body"><div class="nm">${cardioDef(p.type).label}</div><div class="sub">Ziel 30 Min · wird beim Start erfasst</div></div></div>`
+        : `<div class="muted" style="font-size:13.5px;padding:6px 0">Noch keine Übungen</div>`)}
       <div style="margin-top:12px"><button class="btn ghost sm" onclick="startSession('${p.id}')">Mit diesem Plan trainieren</button></div>
     </div>`;
   }).join("");
   return html;
 }
+/* Beschreibung eines Plan-Eintrags (Kraft oder Ausdauer) */
+function planItemName(e){
+  if(e.kind==="cardio"){const c=cardioDef(e.activity);return `${c.emoji} ${esc(c.label)}`;}
+  return esc(e.name);
+}
+function planItemSub(e){
+  if(e.kind==="cardio")return `${e.min} Min${e.dist?` · ${e.dist} km`:""} · Ausdauer`;
+  return `${e.sets} × ${e.reps} · ${eq(e.equip).label}`;
+}
+function planStrengthSets(p){return p.ex.reduce((a,e)=>a+(e.kind==="cardio"?0:e.sets),0);}
 function setSchedule(dayIdx,planId){
   db.schedule[dayIdx]=planId||null;save();
   // nur die Wochenplan-Zeilen-Hervorhebung müsste sich nicht ändern; kein Full-Render nötig
@@ -1272,23 +1561,26 @@ function renderPlanSheet(){
     <label class="field"><span class="lab">Name des Plans</span>
       <input class="inp" id="dName" value="${esc(d.name)}" placeholder="z. B. Ganzkörper, Push, Beine"></label>
     <div class="field"><span class="lab">Typ</span>
-      <div class="seg-pick">
-        <button class="${d.type==="full"?"on":""}" onclick="draft.type='full';renderPlanSheet()">Ganzkörper</button>
-        <button class="${d.type==="split"?"on":""}" onclick="draft.type='split';renderPlanSheet()">Split</button>
-      </div></div>
+      <div class="type-pick">
+        <button class="${d.type==="full"?"on":""}" onclick="draftSyncName();draft.type='full';renderPlanSheet()">Ganzkörper</button>
+        <button class="${d.type==="split"?"on":""}" onclick="draftSyncName();draft.type='split';renderPlanSheet()">Split</button>
+        ${CARDIO.map(c=>`<button class="${d.type===c.id?"on":""}" style="${d.type===c.id?`border-color:${c.color};background:${c.color}1a;color:${c.color}`:""}" onclick="draftSyncName();draft.type='${c.id}';renderPlanSheet()">${c.emoji} ${c.label}</button>`).join("")}
+      </div>
+      ${isCardioType(d.type)?`<p class="muted" style="font-size:12.5px;margin:-4px 0 0">Ausdauer-Plan: startet direkt eine ${cardioDef(d.type).label}-Einheit. Übungen sind optional.</p>`:""}
+    </div>
 
     <div class="lab" style="font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px">Übungen (${d.ex.length})</div>
-    ${d.ex.map((e,i)=>{const E=eq(e.equip);return `<div class="ex-item">
+    ${d.ex.map((e,i)=>`<div class="ex-item">
       <div class="idx">${i+1}</div>
-      <div class="body tap" onclick="draftSyncName();editExercise(${i})"><div class="nm">${esc(e.name)}</div>
-        <div class="sub">${e.sets}×${e.reps} · ${E.label} · ✎ tippen zum Ändern</div></div>
+      <div class="body tap" onclick="draftSyncName();editExercise(${i})"><div class="nm">${planItemName(e)}</div>
+        <div class="sub">${planItemSub(e)} · ✎ tippen zum Ändern</div></div>
       <button class="x-btn mini" ${i===0?"disabled":""} onclick="moveEx(${i},-1)" aria-label="nach oben" style="color:var(--muted)">
         <svg viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
       <button class="x-btn mini" ${i===d.ex.length-1?"disabled":""} onclick="moveEx(${i},1)" aria-label="nach unten" style="color:var(--muted)">
         <svg viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></svg></button>
       <button class="x-btn mini" onclick="draftSyncName();draft.ex.splice(${i},1);renderPlanSheet()" aria-label="löschen">
         <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-    </div>`;}).join("")}
+    </div>`).join("")}
     <button class="add-set" style="margin-top:10px" onclick="draftSyncName();editExercise(null)">
       <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Übung hinzufügen</button>
 
@@ -1305,7 +1597,7 @@ function moveEx(i,dir){
 function savePlan(){
   draftSyncName();
   if(!draft.name.trim()){toast("Bitte einen Namen vergeben");return;}
-  if(!draft.ex.length){toast("Mindestens eine Übung hinzufügen");return;}
+  if(!draft.ex.length && !isCardioType(draft.type)){toast("Mindestens eine Übung hinzufügen");return;}
   const clean={id:draft.id,name:draft.name.trim(),type:draft.type,ex:draft.ex};
   const i=db.plans.findIndex(p=>p.id===draft.id);
   if(i>=0)db.plans[i]=clean;else db.plans.push(clean);
@@ -1323,32 +1615,69 @@ function editExercise(i){
   exIndex=i;
   if(i!=null)exDraft={...draft.ex[i]};
   else exDraft={id:uid(),name:"",equip:"kg",sets:3,reps:12};
+  renderExEditor();
+  if(i!=null && exDraft.kind!=="cardio")$("#exName").focus();
+}
+function setExKind(kind){
+  if(kind==="cardio") exDraft={id:exDraft.id,kind:"cardio",activity:exDraft.activity||"run",min:exDraft.min||30,dist:exDraft.dist||""};
+  else exDraft={id:exDraft.id,name:exDraft.name||"",equip:exDraft.equip||"kg",sets:exDraft.sets||3,reps:exDraft.reps||12};
+  renderExEditor();
+}
+function renderExEditor(){
+  const isC=exDraft.kind==="cardio";
+  const toggle=`<div class="seg-pick" style="margin-bottom:14px">
+      <button class="${!isC?"on":""}" onclick="setExKind('strength')">Kraftübung</button>
+      <button class="${isC?"on":""}" onclick="setExKind('cardio')">Ausdauer</button>
+    </div>`;
+  let body;
+  if(isC){
+    body=`<div class="field"><span class="lab">Aktivität</span>
+      <div class="cardio-pick" id="exAct">
+        ${CARDIO.map(c=>`<button class="${exDraft.activity===c.id?"on":""}" style="${exDraft.activity===c.id?`border-color:${c.color};background:${c.color}1a`:""}" onclick="exDraft.activity='${c.id}';renderExEditor()">
+          <span class="ce">${c.emoji}</span><span>${c.label}</span></button>`).join("")}
+      </div></div>
+      <div class="two">
+        <label class="field"><span class="lab">Ziel-Dauer (Min)</span>
+          <input class="inp num" id="exMin" inputmode="numeric" value="${exDraft.min||""}" placeholder="z. B. 30"></label>
+        <label class="field"><span class="lab">Ziel-Distanz (km)</span>
+          <input class="inp num" id="exDist" inputmode="decimal" value="${exDraft.dist||""}" placeholder="optional"></label>
+      </div>`;
+  }else{
+    body=`${exIndex==null?`<input class="inp" id="pkSearch" placeholder="🔍 Aus Bibliothek wählen…" oninput="filterPicks(this)" style="margin-bottom:11px">
+        <div class="pick-wrap" id="pkWrap">${suggestChipsHTML()}</div>`:""}
+      <label class="field"><span class="lab">Name der Übung</span>
+        <input class="inp" id="exName" value="${esc(exDraft.name||"")}" placeholder="z. B. Kurzhantel-Rudern"></label>
+      <label class="field"><span class="lab">Equipment</span>
+        <select class="inp" id="exEq">${EQUIP.map(e=>`<option value="${e.id}" ${exDraft.equip===e.id?"selected":""}>${e.label}</option>`).join("")}</select></label>
+      <div class="two">
+        <label class="field"><span class="lab">Sätze (Ziel)</span>
+          <input class="inp num" id="exSets" inputmode="numeric" value="${exDraft.sets||3}"></label>
+        <label class="field"><span class="lab">Wdh. (Ziel)</span>
+          <input class="inp num" id="exReps" inputmode="numeric" value="${exDraft.reps||12}"></label>
+      </div>`;
+  }
   $("#sheet").innerHTML=`<div class="grab"></div>
-    <h3 class="sh-title">${i!=null?"Übung bearbeiten":"Neue Übung"}</h3>
-    ${i==null?`<input class="inp" id="pkSearch" placeholder="🔍 Aus Bibliothek wählen…" oninput="filterPicks(this)" style="margin-bottom:11px">
-      <div class="pick-wrap" id="pkWrap">${suggestChipsHTML()}</div>`:""}
-    <label class="field"><span class="lab">Name der Übung</span>
-      <input class="inp" id="exName" value="${esc(exDraft.name)}" placeholder="z. B. Kurzhantel-Rudern"></label>
-    <label class="field"><span class="lab">Equipment</span>
-      <select class="inp" id="exEq">${EQUIP.map(e=>`<option value="${e.id}" ${exDraft.equip===e.id?"selected":""}>${e.label}</option>`).join("")}</select></label>
-    <div class="two">
-      <label class="field"><span class="lab">Sätze (Ziel)</span>
-        <input class="inp num" id="exSets" inputmode="numeric" value="${exDraft.sets}"></label>
-      <label class="field"><span class="lab">Wdh. (Ziel)</span>
-        <input class="inp num" id="exReps" inputmode="numeric" value="${exDraft.reps}"></label>
-    </div>
+    <h3 class="sh-title">${exIndex!=null?"Eintrag bearbeiten":"Neuer Eintrag"}</h3>
+    ${toggle}${body}
     <div style="margin-top:8px;display:flex;gap:11px">
       <button class="btn" onclick="saveExercise()">Übernehmen</button>
       <button class="btn ghost sm" style="flex:none" onclick="renderPlanSheet()">Zurück</button>
     </div>`;
-  if(i!=null)$("#exName").focus();
 }
 function saveExercise(){
-  const name=$("#exName").value.trim();
-  if(!name){toast("Bitte Übungsnamen eingeben");return;}
-  const o={id:exDraft.id,name,equip:$("#exEq").value,
-    sets:Math.max(1,parseInt($("#exSets").value)||3),
-    reps:Math.max(1,parseInt($("#exReps").value)||10)};
+  let o;
+  if(exDraft.kind==="cardio"){
+    const min=Math.max(1,parseInt($("#exMin").value)||0);
+    let dist=($("#exDist").value||"").trim().replace(",",".");
+    dist=dist!==""&&!isNaN(+dist)?+dist:"";
+    o={id:exDraft.id,kind:"cardio",activity:exDraft.activity||"run",min,dist};
+  }else{
+    const name=$("#exName").value.trim();
+    if(!name){toast("Bitte Übungsnamen eingeben");return;}
+    o={id:exDraft.id,name,equip:$("#exEq").value,
+      sets:Math.max(1,parseInt($("#exSets").value)||3),
+      reps:Math.max(1,parseInt($("#exReps").value)||10)};
+  }
   if(exIndex!=null)draft.ex[exIndex]=o;else draft.ex.push(o);
   renderPlanSheet();
 }
@@ -1518,6 +1847,8 @@ function drawCharts(){
 
 /* ============================== STATISTIK (Training + Körper) ============================== */
 let statsMode="training";   // 'training' | 'body'
+let statsPeriod="week";     // 'day' | 'week' | 'month' | 'year'
+let statsMetric="sets";     // 'sets' | 'min' | 'sessions'
 let bodyMetric="weight";
 function viewStats(){
   let html=`<div class="h-row"><div><div class="eyebrow">Auswertung</div>
@@ -1535,39 +1866,60 @@ function statsTraining(){
     return `<div class="empty"><div class="big">📊</div><h3>Noch keine Daten</h3>
       <p>Schließe Trainings ab, dann erscheinen hier deine Wochenwerte.</p></div>`;
   }
-  // diese Woche
-  const wk=weekStart(Date.now()).getTime();
-  const thisWeek=db.sessions.filter(s=>weekKey(s.date)===wk);
-  const wSets=thisWeek.reduce((a,s)=>a+setsOf(s),0);
-  const wDays=new Set(thisWeek.map(s=>new Date(s.date).toDateString())).size;
-  const wVol=thisWeek.reduce((a,s)=>a+volOf(s),0);
-  const wMin=thisWeek.reduce((a,s)=>a+(s.duration||0),0);
-  const wKcal=thisWeek.reduce((a,s)=>a+(s.kcal||0),0);
-  const streak=weekStreak();
-  // gesamt
+  // ---- Auswertung nach Zeitraum ----
+  const buckets=periodBuckets(statsPeriod);
+  const cur=buckets[buckets.length-1].agg;
+  const PMETA=[["day","Tag"],["week","Woche"],["month","Monat"],["year","Jahr"]];
+  const MMETA=[["sets","Sätze"],["min","Zeit"],["sessions","Trainings"]];
+  const mv=b=> statsMetric==="sets"?b.agg.sets : statsMetric==="min"?b.agg.min : b.agg.trainings;
+  const metricTitle= statsMetric==="sets"?"Sätze" : statsMetric==="min"?"Trainingszeit (Min)" : "Trainings";
+  const fmtMin=m=> m>=60?(m/60).toFixed(1).replace('.',',')+' h' : m+' min';
+
+  // gesamt (für Gesamt-Kacheln unten)
   const totalSessions=db.sessions.length;
   const totalSets=db.sessions.reduce((a,s)=>a+setsOf(s),0);
   const totalMin=db.sessions.reduce((a,s)=>a+(s.duration||0),0);
   const totalKcal=db.sessions.reduce((a,s)=>a+(s.kcal||0),0);
 
-  let html=`<div class="eyebrow" style="margin-bottom:10px">Diese Woche</div>
-    <div class="kpi-grid">
-      <div class="kpi"><div class="v num">${wDays}</div><div class="k">Trainingstage</div></div>
-      <div class="kpi"><div class="v num">${wSets}</div><div class="k">Sätze</div></div>
-      <div class="kpi"><div class="v num">${wVol>0?(wVol>=1000?(wVol/1000).toFixed(1)+'t':wVol+'kg'):'–'}</div><div class="k">Volumen</div></div>
-      <div class="kpi accent"><div class="v num">${streak}</div><div class="k">Wochen-Streak 🔥</div></div>
-    </div>
-    ${(wMin||wKcal)?`<div class="card" style="margin-top:11px;padding:12px 15px"><div class="spread">
-      <div class="row" style="gap:8px;color:var(--muted);font-size:13.5px"><b style="color:var(--text);font-size:16px" class="num">${wMin}</b> Min trainiert</div>
-      <div class="row" style="gap:8px;color:var(--muted);font-size:13.5px"><b style="color:var(--accent);font-size:16px" class="num">${wKcal}</b> kcal</div>
-    </div></div>`:""}`;
+  const extras=[];
+  if(statsPeriod!=="day") extras.push(`${cur.days.size} Trainingstage`);
+  if(cur.vol>0) extras.push(`Volumen ${cur.vol>=1000?(cur.vol/1000).toFixed(1)+' t':cur.vol+' kg'}`);
+  if(cur.dist>0) extras.push(`${cur.dist.toFixed(1)} km`);
 
-  // Sätze pro Woche (8 Wochen)
-  const ws=weeklySets(8);
-  html+=`<div class="card" style="margin-top:14px">
-    <div class="eyebrow" style="margin-bottom:6px">Sätze pro Woche</div>
-    ${svgBarChart(ws.map(w=>w.sets), ws.map(w=>fmtDM(w.ws)), {color:"#f15a22"})}
-  </div>`;
+  let html=`<div class="seg-sel" style="margin-bottom:12px">
+      ${PMETA.map(([id,lb])=>`<button class="seg ${statsPeriod===id?'active':''}" onclick="statsPeriod='${id}';render()">${lb}</button>`).join("")}
+    </div>
+    <div class="eyebrow" style="margin-bottom:10px">${periodLabel(statsPeriod)}</div>
+    <div class="kpi-grid">
+      <div class="kpi"><div class="v num">${cur.trainings}</div><div class="k">Trainings</div></div>
+      <div class="kpi"><div class="v num">${cur.sets||'–'}</div><div class="k">Sätze</div></div>
+      <div class="kpi"><div class="v num">${cur.min?fmtMin(cur.min):'–'}</div><div class="k">Trainingszeit</div></div>
+      <div class="kpi accent"><div class="v num">${cur.kcal||'–'}</div><div class="k">kcal</div></div>
+    </div>
+    ${extras.length?`<div class="muted" style="font-size:12.5px;margin-top:9px;text-align:center">${extras.join(" · ")}</div>`:""}`;
+
+  // Heute erfasste Einheiten (nur Tagesansicht) – zeigt Kraft wie Ausdauer eindeutig an
+  if(statsPeriod==="day"){
+    const ds=startOfDay(Date.now()).getTime(), de=ds+DAYMS;
+    const today=db.sessions.filter(s=>s.date>=ds&&s.date<de).sort((a,b)=>b.date-a.date);
+    html+=`<div class="card" style="margin-top:12px">
+      <div class="eyebrow" style="margin-bottom:10px">Heute erfasst</div>
+      ${today.length? today.map(s=>{
+        if(isCardio(s)){const c=cardioDef(s.activity);
+          return `<div class="cs-row">${pictoCardio(s.activity)}<div class="cs-body"><div class="cs-name">${esc(c.label)}</div><div class="cs-sub">${s.duration||0} Min${s.distance?` · ${s.distance} km`:""}${s.kcal!=null?` · ${s.kcal} kcal`:""}</div></div></div>`;}
+        const first=(exList(s)[0]||{}).name||"";
+        return `<div class="cs-row">${pictoStrength(first)}<div class="cs-body"><div class="cs-name">${esc(s.planName||"Krafttraining")}</div><div class="cs-sub">${setsOf(s)} Sätze · ${repsOf(s)} Wdh.${s.duration?` · ${s.duration} Min`:""}${s.kcal!=null?` · ${s.kcal} kcal`:""}</div></div></div>`;
+      }).join("") : `<div class="muted" style="font-size:13.5px;padding:4px 0">Heute noch kein Training erfasst.</div>`}
+    </div>`;
+  }
+
+  html+=`<div class="card" style="margin-top:12px">
+      <div class="eyebrow" style="margin-bottom:8px">Verlauf · ${metricTitle}</div>
+      <div class="seg-sel" style="margin-bottom:8px">
+        ${MMETA.map(([id,lb])=>`<button class="seg ${statsMetric===id?'active':''}" onclick="statsMetric='${id}';render()">${lb}</button>`).join("")}
+      </div>
+      ${svgBarChart(buckets.map(mv), buckets.map(b=>b.label), {color:"#f15a22"})}
+    </div>`;
 
   // Muskelgruppen (letzte 4 Wochen)
   const mb=muscleBreakdown(28);
