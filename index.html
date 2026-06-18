@@ -571,6 +571,7 @@ const muscleOf=name=>NAME2MUSCLE[(name||"").toLowerCase()]||"Sonstige";
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
 
 let db=load();
+const APP_VERSION="v19";   // sichtbar in den Einstellungen – zum Prüfen, ob die neue Version läuft
 let active=null;        // running session (in memory, persisted in db.active)
 let tab="train";
 let progressExId=null;  // selected exercise for progress chart
@@ -1165,8 +1166,8 @@ function copyLast(ei){
 /* ---- swap / add / remove exercises within the running session ---- */
 function knownExercises(){
   const m=new Map();
-  for(const p of db.plans)for(const e of p.ex)if(!m.has(e.name))m.set(e.name,e.equip);
-  for(const s of db.sessions)for(const e of s.ex)if(!m.has(e.name))m.set(e.name,e.equip);
+  for(const p of db.plans)for(const e of p.ex){if(e.kind==="cardio")continue; if(!m.has(e.name))m.set(e.name,e.equip);}
+  for(const s of db.sessions)for(const e of exList(s))if(!m.has(e.name))m.set(e.name,e.equip);
   return [...m.entries()].map(([name,equip])=>({name,equip}))
     .sort((a,b)=>a.name.localeCompare(b.name,"de"));
 }
@@ -2382,7 +2383,7 @@ function openSettings(){
   const stats={
     plans:db.plans.length,
     sessions:db.sessions.length,
-    sets:db.sessions.reduce((a,s)=>a+s.ex.reduce((b,e)=>b+e.sets.length,0),0)
+    sets:db.sessions.reduce((a,s)=>a+setsOf(s),0)
   };
   $("#sheet").innerHTML=`<div class="grab"></div>
     <h3 class="sh-title">Einstellungen & Daten</h3>
@@ -2402,7 +2403,8 @@ function openSettings(){
     <div class="danger-zone">
       <div class="eyebrow" style="color:var(--bad);margin-bottom:6px">Gefahrenzone</div>
       <button class="txt-link danger" onclick="wipe()">Alle Daten löschen</button>
-    </div>`;
+    </div>
+    <div style="text-align:center;color:var(--muted-2);font-size:12px;margin-top:18px">Eisen · Version ${APP_VERSION}</div>`;
   openSheet();
 }
 function exportData(){
