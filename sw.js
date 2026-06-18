@@ -1,5 +1,5 @@
-/* Eisen Trainingstracker – Service Worker (Offline) */
-const CACHE = 'eisen-v12';
+/* Eisen Trainingstracker – Service Worker (Offline + zuverlässige Updates) */
+const CACHE = 'eisen-v17';
 const ASSETS = [
   './',
   './index.html',
@@ -26,22 +26,35 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', e => {
   const req = e.request;
   if (req.method !== 'GET') return;
+
+  // Seitenaufruf (HTML): NETZ ZUERST → immer aktuelle App, offline aus Cache
+  if (req.mode === 'navigate') {
+    e.respondWith(
+      fetch(req)
+        .then(res => {
+          const copy = res.clone();
+          caches.open(CACHE).then(c => c.put('./index.html', copy));
+          return res;
+        })
+        .catch(() => caches.match(req).then(r => r || caches.match('./index.html')))
+    );
+    return;
+  }
+
+  // Übrige gleich-origin Dateien: Cache zuerst, dann Netz (und nachladen)
   e.respondWith(
     caches.match(req).then(hit => {
       if (hit) return hit;
-      return fetch(req)
-        .then(res => {
-          // neue, gleich-origin GETs zusätzlich in den Cache legen
-          try {
-            const url = new URL(req.url);
-            if (url.origin === self.location.origin) {
-              const copy = res.clone();
-              caches.open(CACHE).then(c => c.put(req, copy));
-            }
-          } catch (_) {}
-          return res;
-        })
-        .catch(() => caches.match('./index.html')); // Navigations-Fallback offline
+      return fetch(req).then(res => {
+        try {
+          const url = new URL(req.url);
+          if (url.origin === self.location.origin) {
+            const copy = res.clone();
+            caches.open(CACHE).then(c => c.put(req, copy));
+          }
+        } catch (_) {}
+        return res;
+      }).catch(() => Promise.reject('offline'));
     })
   );
 });

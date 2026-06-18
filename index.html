@@ -277,6 +277,41 @@
   .cs-km .num{font-size:18px;font-weight:800}
   .cs-km .cs-ku{display:block;font-size:10px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.06em}
 
+  /* "Davor" – Ergebnis der letzten Einheit dieser Übung */
+  .prev-strip{margin:0 0 11px;padding:8px 11px;background:#eef2f7;border:1px solid var(--line-soft);border-radius:11px}
+  .prev-strip .prev-head{display:flex;align-items:baseline;gap:7px}
+  .prev-strip .prev-tag{font-size:10px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--accent)}
+  .prev-strip .prev-when{font-size:11px;color:var(--muted-2)}
+  .prev-strip .prev-sets{font-size:13.5px;color:var(--text);font-weight:700;margin-top:3px;line-height:1.45}
+  .prev-strip .prev-tot{font-size:11.5px;color:var(--muted);margin-top:2px}
+  .prev-strip.best{background:#fff7ed;border-color:#fde6c7}
+
+  /* GPS-Aufzeichnung */
+  .gps-cta{background:#0f7b6c}
+  .or-div{display:flex;align-items:center;gap:10px;margin:12px 0;color:var(--muted-2);font-size:12px}
+  .or-div::before,.or-div::after{content:"";flex:1;height:1px;background:var(--line)}
+  .gps-screen{padding:4px 2px 8px}
+  .gps-top{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+  .gps-top .picto{width:40px;height:40px}
+  .gps-big{text-align:center;margin:8px 0 4px}
+  .gps-big .gv{font-size:64px;font-weight:800;line-height:1;letter-spacing:-1px;font-variant-numeric:tabular-nums}
+  .gps-big .gk{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:4px}
+  .gps-row{display:flex;justify-content:space-around;text-align:center;margin:18px 0;gap:8px}
+  .gps-row .gv2{font-size:26px;font-weight:800;font-variant-numeric:tabular-nums}
+  .gps-row .gk{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+  .gps-acc{text-align:center;font-size:12px;margin-bottom:16px}
+  .gps-btns{display:flex;gap:11px}
+  .gps-btns .btn{flex:1}
+
+  /* Karte & Streckenform */
+  .route-map{width:100%;height:220px;border-radius:14px;overflow:hidden;background:#e8edf3;border:1px solid var(--line)}
+  .route-map .leaflet-container{width:100%;height:100%;border-radius:14px;font:inherit}
+  .route-svg{width:100%;height:100%;display:block}
+  .map-empty{display:flex;align-items:center;justify-content:center;height:100%;color:var(--muted-2);font-size:13px}
+  .route-thumb{margin-top:12px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;border:1px solid var(--line)}
+  .route-thumb .route-svg{height:150px}
+  .route-thumb-cta{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(transparent,rgba(0,0,0,.55));color:#fff;font-size:12px;font-weight:700;padding:16px 12px 9px;text-align:center}
+
   /* ---------- Animierte Bewegungs-Piktogramme ---------- */
   .picto{width:34px;height:34px;flex:none;display:inline-block;color:#51607a;line-height:0}
   .picto svg{width:100%;height:100%;display:block;overflow:visible}
@@ -790,7 +825,12 @@ function go(t){tab=t;render();window.scrollTo(0,0);}
 function render(){
   document.querySelectorAll("nav .tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===tab));
   const v=$("#view");
-  if(tab==="train") v.innerHTML=active?viewSession():viewTrainHome();
+  if(tab==="train"){
+    if(gps){ v.innerHTML = gps.screen==="track"?viewGpsTrack():viewGpsDone();
+      if(gps.screen==="track")updateGpsLive();
+      if(gps.screen==="done")setTimeout(()=>renderRouteMap("gmap",gps.points),60);
+    } else v.innerHTML = active?viewSession():viewTrainHome();
+  }
   else if(tab==="plans") v.innerHTML=viewPlans();
   else if(tab==="history") v.innerHTML=viewHistory();
   else if(tab==="stats") v.innerHTML=viewStats();
@@ -909,6 +949,7 @@ function viewSession(){
           <svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg></button>
       </div>
       <div class="target">Ziel: ${e.targetSets} × ${e.targetReps} Wdh.</div>
+      ${bestSummaryHTML(e.name)}
       <div class="col-h"><span></span><span>Wdh.</span><span></span><span>Gewicht</span><span style="text-transform:none;letter-spacing:0">Band</span><span></span></div>
       <div class="sets" data-sets="${ei}">${rows}</div>
       <div class="pr-flag" data-pr="${ei}">★ Neuer Bestwert!</div>
@@ -917,7 +958,7 @@ function viewSession(){
           <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Satz hinzufügen</button>
         ${le?`<button class="btn ghost sm" onclick="copyLast(${ei})">↻ Wie zuletzt</button>`:""}
       </div>
-      <div class="last" style="margin-top:9px">${le?"":"<b>Erste Aufzeichnung</b>"}${best>0?`${le?"":" · "}Bestwert ≈ ${best.toFixed(0)} kg (1RM)`:""}</div>
+      <div class="last" style="margin-top:9px">${le?"":"<b>Erste Aufzeichnung</b>"}</div>
     </div>`;
   }).join("");
 
@@ -999,13 +1040,51 @@ function setRow(ei,si,s){
       <button class="x-btn" onclick="delSet(${ei},${si})" aria-label="Satz löschen">
         <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     </div>
-    ${s.ph?`<div class="set-last">${setLastHTML(s.ph)}</div>`:""}
   </div>`;
 }
 function setLastHTML(ph){
   if(!ph)return "";
   const txt = ph.weight>0 ? `${ph.reps} × ${fmtKg(ph.weight)}` : `${ph.reps} Wdh.`;
   return `<span style="color:var(--muted-2)">letztes Mal:</span> <b style="color:var(--muted)">${txt}</b>${bandDot(ph)}`;
+}
+/* Beste Leistung dieser Übung (über alle Trainings) – bandgestützte Sätze ausgenommen */
+function bestSetInfo(exName){
+  const all=[];
+  for(const s of db.sessions)for(const e of exList(s)){
+    if(e.name!==exName)continue;
+    for(const st of e.sets){
+      if(isBanded(st))continue;
+      const reps=+st.reps||0; if(!reps)continue;
+      all.push({date:s.date,reps,weight:+st.weight||0});
+    }
+  }
+  if(!all.length)return null;
+  const weighted=all.some(x=>x.weight>0);
+  let b;
+  if(weighted){
+    b=all.reduce((m,x)=>{
+      const me=e1rm(m.weight,m.reps), xe=e1rm(x.weight,x.reps);
+      if(xe!==me)return xe>me?x:m;
+      if(x.weight!==m.weight)return x.weight>m.weight?x:m;
+      return x.reps>m.reps?x:m;
+    });
+    b.e1=e1rm(b.weight,b.reps);
+  }else{
+    b=all.reduce((m,x)=> x.reps!==m.reps?(x.reps>m.reps?x:m):(x.date>m.date?x:m));
+    b.e1=0;
+  }
+  return b;
+}
+function bestSummaryHTML(exName){
+  const b=bestSetInfo(exName);
+  if(!b)return "";
+  const main = b.weight>0 ? `${b.reps} × ${fmtKg(b.weight)}` : `${b.reps} Wdh.`;
+  const sub  = b.weight>0 ? `≈ ${b.e1.toFixed(0)} kg geschätztes 1RM` : `Persönlicher Bestwert`;
+  return `<div class="prev-strip best">
+    <div class="prev-head"><span class="prev-tag">★ Bestleistung</span><span class="prev-when">${fmtDate(b.date)}</span></div>
+    <div class="prev-sets">${main}</div>
+    <div class="prev-tot">${sub}</div>
+  </div>`;
 }
 function bandBtn(ei,si,s){
   const b=band(s&&s.band);
@@ -1409,6 +1488,8 @@ function renderCardioSheet(v){
   const kcal=calcKcalCardio(v.min,w,cardioDraft.activity,cardioDraft.intensity);
   $("#sheet").innerHTML=`<div class="grab"></div>
     <h3 class="sh-title">Ausdauertraining</h3>
+    ${cardioDraft.activity!=="swim"?`<button class="btn gps-cta" onclick="startGpsCardio(cardioDraft.activity)">📍 Strecke per GPS aufzeichnen</button>
+    <div class="or-div"><span>oder manuell eintragen</span></div>`:""}
     <div class="field"><span class="lab">Aktivität</span>
       <div class="cardio-pick" id="cAct">
         ${CARDIO.map(c=>`<button class="${cardioDraft.activity===c.id?"on":""}" style="${cardioDraft.activity===c.id?`border-color:${c.color};background:${c.color}1a`:""}" onclick="setCardioActivity('${c.id}')">
@@ -1479,6 +1560,211 @@ function saveCardio(){
   const c=cardioDef(cardioDraft.activity);
   const extra=[`${min} Min`, dist?`${dist} km`:null, kcal!=null?`${kcal} kcal`:null].filter(Boolean).join(" · ");
   setTimeout(()=>toast(`${c.emoji} ${c.label} gespeichert · ${extra}`),250);
+}
+
+/* ============================== GPS-Streckenaufzeichnung ============================== */
+let gps=null; // {activity,intensity,points:[],dist(m),running,accMs,lastResume,startT,watchId,timer,screen,weight,lastPt}
+function haversine(a,b){
+  const R=6371000, toR=Math.PI/180;
+  const dLa=(b.lat-a.lat)*toR, dLo=(b.lng-a.lng)*toR;
+  const la1=a.lat*toR, la2=b.lat*toR;
+  const x=Math.sin(dLa/2)**2 + Math.cos(la1)*Math.cos(la2)*Math.sin(dLo/2)**2;
+  return 2*R*Math.asin(Math.min(1,Math.sqrt(x)));
+}
+function gpsElapsedMs(){ if(!gps)return 0; return gps.accMs + (gps.running?(Date.now()-gps.lastResume):0); }
+function fmtClock(ms){ const s=Math.floor(ms/1000); const h=Math.floor(s/3600), m=Math.floor((s%3600)/60), ss=s%60;
+  return h>0?`${h}:${String(m).padStart(2,"0")}:${String(ss).padStart(2,"0")}`:`${m}:${String(ss).padStart(2,"0")}`; }
+function gpsCleanup(){ if(gps){ if(gps.watchId!=null&&navigator.geolocation)navigator.geolocation.clearWatch(gps.watchId); if(gps.timer)clearInterval(gps.timer); gps.watchId=null; gps.timer=null; } }
+
+function startGpsCardio(activity){
+  if(activity==="swim"){toast("GPS für Schwimmen nicht verfügbar");return;}
+  if(!navigator.geolocation){toast("GPS auf diesem Gerät nicht verfügbar");return;}
+  closeSheet();
+  gps={activity,intensity:"mod",points:[],dist:0,running:true,accMs:0,lastResume:Date.now(),startT:Date.now(),watchId:null,timer:null,screen:"track",weight:getLatestWeight(),lastPt:null,lastAcc:null};
+  try{
+    gps.watchId=navigator.geolocation.watchPosition(onGpsPos,onGpsErr,{enableHighAccuracy:true,maximumAge:1000,timeout:20000});
+  }catch(e){ toast("GPS-Start fehlgeschlagen"); gps=null; return; }
+  gps.timer=setInterval(()=>{ if(gps&&gps.screen==="track")updateGpsLive(); },1000);
+  go("train");
+}
+function onGpsPos(pos){
+  if(!gps||!gps.running)return;
+  const c=pos.coords; gps.lastAcc=c.accuracy;
+  if(c.accuracy!=null && c.accuracy>50){ updateGpsLive(); return; } // schlechte Genauigkeit: nicht werten
+  const pt={lat:c.latitude,lng:c.longitude,t:Date.now(),acc:c.accuracy};
+  if(gps.lastPt){ const d=haversine(gps.lastPt,pt); if(d>=2 && d<=70) gps.dist+=d; } // Jitter/Sprünge filtern
+  gps.points.push(pt); gps.lastPt=pt;
+  updateGpsLive();
+}
+function onGpsErr(err){
+  if(!gps)return;
+  if(err && err.code===1){ toast("Standort-Freigabe nötig"); gpsCleanup(); gps=null; go("train"); return; }
+  // sonst weiter versuchen; nur Hinweis
+  const el=$("#gAcc"); if(el)el.textContent="Suche GPS-Signal…";
+}
+function updateGpsLive(){
+  if(!gps)return;
+  const ms=gpsElapsedMs(), km=gps.dist/1000, minF=ms/60000;
+  const set=(id,v)=>{const e=$("#"+id);if(e)e.textContent=v;};
+  set("gDist", km.toFixed(2).replace(".",","));
+  set("gTime", fmtClock(ms));
+  set("gPace", (km>0.02&&minF>0)?(minF/km).toFixed(1).replace(".",",")+"’":"–");
+  set("gSpeed", (minF>0)?(km/(minF/60)).toFixed(1).replace(".",","):"0,0");
+  const acc=$("#gAcc"); if(acc)acc.textContent=gps.lastAcc!=null?`GPS-Genauigkeit ±${Math.round(gps.lastAcc)} m · ${gps.points.length} Punkte`:"Suche GPS-Signal…";
+}
+function pauseGps(){ if(!gps||!gps.running)return; gps.accMs+=Date.now()-gps.lastResume; gps.running=false; gps.lastPt=null; render(); }
+function resumeGps(){ if(!gps||gps.running)return; gps.running=true; gps.lastResume=Date.now(); render(); }
+function stopGps(){ if(!gps)return; if(gps.running){gps.accMs+=Date.now()-gps.lastResume; gps.running=false;} gpsCleanup(); gps.screen="done"; render(); }
+function discardGps(){
+  confirmSheet("Aufzeichnung verwerfen?","Die aufgezeichnete Strecke wird nicht gespeichert.","Verwerfen",()=>{
+    gpsCleanup(); gps=null; go("train");
+  });
+}
+function setGpsIntensity(id){ if(!gps)return; gps.intensity=id; document.querySelectorAll("#gInt button").forEach((b,i)=>b.classList.toggle("on",INTENSITY[i].id===id)); updateGpsKcal(); }
+function updateGpsKcal(){
+  if(!gps)return;
+  let w=(($("#gWeight")||{}).value||"").trim().replace(",",".");
+  w=w!==""&&!isNaN(+w)?+w:null; gps.weight=w;
+  const min=Math.max(1,Math.round(gpsElapsedMs()/60000));
+  const kcal=calcKcalCardio(min,w,gps.activity,gps.intensity);
+  const el=$("#gKcal"); if(el)el.textContent=kcal!=null?kcal:"–";
+}
+function saveGpsCardio(){
+  if(!gps)return;
+  const min=Math.max(1,Math.round(gpsElapsedMs()/60000));
+  const km=+(gps.dist/1000).toFixed(2);
+  let w=gps.weight; if(w==null)w=getLatestWeight();
+  const kcal=calcKcalCardio(min,w,gps.activity,gps.intensity);
+  const track=gps.points.map(p=>({lat:+p.lat.toFixed(5),lng:+p.lng.toFixed(5),t:p.t}));
+  db.sessions.push({
+    id:uid(),kind:"cardio",activity:gps.activity,date:gps.startT,
+    duration:min,distance:km||null,kcal,intensity:gps.intensity,bodyWeight:w||null,done:true,
+    track:track.length>1?track:null
+  });
+  db.sessions.sort((a,b)=>a.date-b.date);
+  const c=cardioDef(gps.activity); gpsCleanup(); gps=null; save(); go("history");
+  setTimeout(()=>toast(`${c.emoji} ${c.label} gespeichert · ${km.toFixed(2).replace(".",",")} km · ${min} Min`),250);
+}
+
+function viewGpsTrack(){
+  const c=cardioDef(gps.activity);
+  return `<div class="gps-screen">
+    <div class="gps-top"><span class="picto" style="color:${c.color}">${PICTO[gps.activity]||PICTO.run}</span>
+      <div><h2 style="margin:0">${c.label}</h2><div class="muted" style="font-size:12.5px">GPS-Aufzeichnung${gps.running?" läuft…":" pausiert"}</div></div></div>
+    <div class="gps-big"><div class="gv" id="gDist">0,00</div><div class="gk">Kilometer</div></div>
+    <div class="gps-row">
+      <div><div class="gv2" id="gTime">0:00</div><div class="gk">Zeit</div></div>
+      <div><div class="gv2" id="gPace">–</div><div class="gk">min/km</div></div>
+      <div><div class="gv2" id="gSpeed">0,0</div><div class="gk">km/h</div></div>
+    </div>
+    <div class="gps-acc muted" id="gAcc">Suche GPS-Signal…</div>
+    <div class="gps-btns">
+      ${gps.running?`<button class="btn ghost" onclick="pauseGps()">⏸ Pause</button>`:`<button class="btn" onclick="resumeGps()">▶ Fortsetzen</button>`}
+      <button class="btn danger" onclick="stopGps()">⏹ Stopp & speichern</button>
+    </div>
+    <button class="txt-link" style="margin:12px auto 0;display:block" onclick="discardGps()">Verwerfen</button>
+  </div>`;
+}
+function viewGpsDone(){
+  const c=cardioDef(gps.activity);
+  const ms=gpsElapsedMs(), min=Math.max(1,Math.round(ms/60000)), km=gps.dist/1000;
+  const w=gps.weight!=null?gps.weight:getLatestWeight();
+  const kcal=calcKcalCardio(min,w,gps.activity,gps.intensity);
+  const speed=km>0?(km/(min/60)):0;
+  return `<div class="gps-screen">
+    <div class="gps-top"><span class="picto" style="color:${c.color}">${PICTO[gps.activity]||PICTO.run}</span>
+      <div><h2 style="margin:0">${c.label}</h2><div class="muted" style="font-size:12.5px">Aufzeichnung beendet</div></div></div>
+    <div id="gmap" class="route-map"></div>
+    <div class="stat-strip" style="margin-top:12px">
+      <div class="s"><span class="v num">${km.toFixed(2).replace(".",",")}</span><span class="k">km</span></div>
+      <div class="s"><span class="v num">${min}</span><span class="k">Min</span></div>
+      <div class="s"><span class="v num">${speed.toFixed(1).replace(".",",")}</span><span class="k">km/h</span></div>
+      <div class="s"><span class="v num" id="gKcal">${kcal!=null?kcal:"–"}</span><span class="k">kcal</span></div>
+    </div>
+    <div class="field" style="margin-top:14px"><span class="lab">Intensität</span>
+      <div class="seg-pick" id="gInt">${INTENSITY.map(i=>`<button class="${gps.intensity===i.id?"on":""}" onclick="setGpsIntensity('${i.id}')">${i.label}</button>`).join("")}</div></div>
+    <label class="field"><span class="lab">Körpergewicht (kg)</span>
+      <input class="inp num" id="gWeight" inputmode="decimal" value="${w!=null?w:""}" placeholder="z. B. 80" oninput="updateGpsKcal()"></label>
+    <div style="margin-top:14px;display:flex;gap:11px">
+      <button class="btn" onclick="saveGpsCardio()">Speichern</button>
+      <button class="btn ghost sm" style="flex:none" onclick="discardGps()">Verwerfen</button>
+    </div>
+  </div>`;
+}
+
+/* Strecke als SVG-Linie (offline, ohne Karte) */
+function trackToSVG(pts){
+  const P=(pts||[]).filter(p=>p&&isFinite(p.lat)&&isFinite(p.lng));
+  if(P.length<2)return `<div class="map-empty">Keine Streckendaten</div>`;
+  const lat0=P[0].lat*Math.PI/180;
+  const xs=P.map(p=>p.lng*Math.cos(lat0)), ys=P.map(p=>-p.lat);
+  const minx=Math.min(...xs),maxx=Math.max(...xs),miny=Math.min(...ys),maxy=Math.max(...ys);
+  const W=320,H=190,pad=16, sx=(maxx-minx)||1e-9, sy=(maxy-miny)||1e-9;
+  const sc=Math.min((W-2*pad)/sx,(H-2*pad)/sy);
+  const ox=(W-sc*sx)/2, oy=(H-sc*sy)/2;
+  const px=i=>[((xs[i]-minx)*sc+ox),((ys[i]-miny)*sc+oy)];
+  const d=P.map((_,i)=>{const[a,b]=px(i);return (i?"L":"M")+a.toFixed(1)+" "+b.toFixed(1);}).join(" ");
+  const [a0,b0]=px(0), [a1,b1]=px(P.length-1);
+  return `<svg viewBox="0 0 ${W} ${H}" class="route-svg" preserveAspectRatio="xMidYMid meet">
+    <rect x="0" y="0" width="${W}" height="${H}" rx="12" fill="#e8edf3"/>
+    <path d="${d}" fill="none" stroke="#f15a22" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="${a0.toFixed(1)}" cy="${b0.toFixed(1)}" r="4.5" fill="#16a34a"/>
+    <circle cx="${a1.toFixed(1)}" cy="${b1.toFixed(1)}" r="4.5" fill="#ef4444"/>
+  </svg>`;
+}
+/* Leaflet nur bei Bedarf laden (blockiert den App-Start nicht) */
+let _leafletP=null;
+function loadLeaflet(){
+  if(typeof window!=="undefined" && window.L) return Promise.resolve();
+  if(_leafletP) return _leafletP;
+  _leafletP=new Promise((res,rej)=>{
+    try{
+      if(!document.querySelector('link[data-leaflet]')){
+        const css=document.createElement("link");
+        css.rel="stylesheet"; css.href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"; css.setAttribute("data-leaflet","1");
+        document.head.appendChild(css);
+      }
+      const s=document.createElement("script");
+      s.src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
+      s.onload=()=>res(); s.onerror=()=>rej(new Error("leaflet load failed"));
+      document.head.appendChild(s);
+      setTimeout(()=>{ if(!window.L)rej(new Error("leaflet timeout")); },8000);
+    }catch(e){ rej(e); }
+  });
+  return _leafletP;
+}
+/* Karte rendern: sofort SVG-Strecke, danach echte Karte (online, Leaflet) */
+function renderRouteMap(elId,pts){
+  const el=document.getElementById(elId); if(!el)return;
+  const P=(pts||[]).filter(p=>p&&isFinite(p.lat)&&isFinite(p.lng));
+  if(P.length<2){ el.innerHTML=`<div class="map-empty">Keine Streckendaten</div>`; return; }
+  el.innerHTML=trackToSVG(P);                 // sofort sichtbar (offline-fähig)
+  loadLeaflet().then(()=>{
+    const node=document.getElementById(elId); if(!node||!window.L)return;
+    try{
+      if(node._map&&node._map.remove)node._map.remove();
+      node.innerHTML="";
+      const map=L.map(node);
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap"}).addTo(map);
+      const ll=P.map(p=>[p.lat,p.lng]);
+      const line=L.polyline(ll,{color:"#f15a22",weight:5,opacity:.9}).addTo(map);
+      L.circleMarker(ll[0],{radius:6,color:"#fff",weight:2,fillColor:"#16a34a",fillOpacity:1}).addTo(map);
+      L.circleMarker(ll[ll.length-1],{radius:6,color:"#fff",weight:2,fillColor:"#ef4444",fillOpacity:1}).addTo(map);
+      map.fitBounds(line.getBounds(),{padding:[24,24]});
+      node._map=map; setTimeout(()=>{try{map.invalidateSize()}catch(e){}},120);
+    }catch(e){ node.innerHTML=trackToSVG(P); }   // bei Fehler: Streckenform behalten
+  }).catch(()=>{ /* offline → SVG-Strecke bleibt */ });
+}
+function openRouteMap(id){
+  const s=db.sessions.find(x=>x.id===id); if(!s||!s.track)return;
+  const c=cardioDef(s.activity);
+  $("#sheet").innerHTML=`<div class="grab"></div>
+    <h3 class="sh-title">${c.emoji} ${c.label} · Strecke</h3>
+    <div id="gmapH" class="route-map" style="height:300px"></div>
+    <div class="muted" style="font-size:12.5px;margin-top:8px;text-align:center">${s.distance?`${(""+s.distance).replace(".",",")} km · `:""}${s.duration||0} Min · ${fmtDate(s.date)}</div>
+    <button class="btn ghost" style="margin-top:13px" onclick="closeSheet()">Schließen</button>`;
+  openSheet();
+  setTimeout(()=>renderRouteMap("gmapH",s.track),90);
 }
 
 /* ============================== PLANS ============================== */
@@ -1716,6 +2002,7 @@ function histSessions(){
           ${speed?`<div class="s"><span class="v num">${speed.toFixed(1)}</span><span class="k">km/h</span></div>`:""}
           ${s.kcal!=null?`<div class="s"><span class="v num">${s.kcal}</span><span class="k">kcal</span></div>`:""}
         </div>
+        ${s.track&&s.track.length>1?`<div class="route-thumb" onclick="openRouteMap('${s.id}')">${trackToSVG(s.track)}<span class="route-thumb-cta">📍 Strecke auf Karte ansehen</span></div>`:""}
         <div style="margin-top:12px"><button class="txt-link danger" onclick="delSession('${s.id}')">Eintrag löschen</button></div>
       </div>`;
     }
@@ -2144,11 +2431,8 @@ active=db.active||null;
 render();
 </script>
 <script>
-/* PWA: Service Worker registrieren (nur über http/https, nicht bei file://) */
 if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js').catch(() => {});
-  });
+  window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js').catch(() => {}); });
 }
 </script>
 </body>
